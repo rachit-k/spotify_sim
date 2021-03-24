@@ -1,3 +1,3 @@
 
-``env FLASK_APP=application.py flask run``
+``python3 application.py db-name user password``
 
