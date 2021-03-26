@@ -35,7 +35,7 @@ app.run()
 def input():
     return render_template("inpage.html")
 
-@app.route("/", methods=["POST"])
+@app.route("/output", methods=["POST"])
 def output():
     command = request.form.get("name")
     print(command)
