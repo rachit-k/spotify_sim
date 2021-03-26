@@ -18,23 +18,27 @@ cur = conn.cursor()
 print("We are here")
 app.run()
 
-@app.route("/", methods=["GET", "POST"])
-def inpage():
-    if request.method == "POST":
-        command = request.form.get("name")
-        print(command)
-        cur.execute(command)
-        records = cur.fetchall()
-        return render_template("outpage.html", name=str(records)) #form=post
-    return render_template("inpage.html")
+# @app.route("/", methods=["GET", "POST"])
+# def inpage():
+#     if request.method == "POST":
+#         command = request.form.get("name")
+#         print(command)
+#         cur.execute(command)
+#         records = cur.fetchall()
+#         return render_template("outpage.html", name=str(records))
+#     return render_template("inpage.html")
 
 # if __name__ == '__main__':
 
 
-# @app.route("/", methods=["GET"])
-# def input():
-#     return render_template("inpage.html")
+@app.route("/", methods=["GET"])
+def input():
+    return render_template("inpage.html")
 
-# @app.route("/page2", methods=["POST"])
-# def output():
-#     return render_template("outpage.html", name=request.form.get("name")) 
+@app.route("/", methods=["POST"])
+def output():
+    command = request.form.get("name")
+    print(command)
+    cur.execute(command)
+    records = cur.fetchall()
+    return render_template("outpage.html", name=str(records))
