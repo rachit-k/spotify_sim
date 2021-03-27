@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from queryC import queryCreator, queryCreatorA
+from queryC import queryCreator
 import psycopg2 
 import sys
 
