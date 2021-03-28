@@ -57,3 +57,11 @@ def queryCreator(form):
         return queryCreatorArtist(form, artist)
     else:
         return queryCreatorArtistAlbum(form, artist, album)
+
+def DelQueryCreatorName(form):
+    song = form.get("Song")
+    return "delete from song where song_name = "+song
+
+def DelQueryCreatorLink(form):
+    song = form.get("Link")
+    return "delete from song where link = "+song
