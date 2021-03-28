@@ -10,8 +10,8 @@ def queryCreatorHelper(form, where_head):
         attval = form.get(attr)
         if(not ( attval is None or  not attval)):
             where_head = where_head + " and " + attr + ">=" +str(code2val(attval)[0])+ " and " +attr + "<" +str(code2val(attval)[1])
-    p = "song_pop"
-    attval = form.get("Popularity")
+    p = "Popularity"
+    attval = form.get(p)
     if(not ( attval is None or  not attval)):
         where_head = where_head + " and " + p + ">=" +str(pcode2val(attval)[0])+ " and " +p + "<" +str(pcode2val(attval)[1])
     l = "Loudness"
