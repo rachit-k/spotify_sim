@@ -5,14 +5,14 @@ import sys
 
 app = Flask(__name__)
 
-app.config['dbname'] = "sample" #sys.argv[1]
+app.config['dbname'] = "db" #sys.argv[1]
 app.config['user'] = "postgres" #sys.argv[2]
 dbname = app.config.get('dbname')
 user = app.config.get('user')
-app.config['password'] = "qmwnebrv1234" #sys.argv[3]
-password = app.config.get('password')
-connect = ("dbname="+dbname+ " user="+user+ " password="+password)
-# connect = ("dbname="+dbname+ " user="+user)
+# app.config['password'] = "qmwnebrv1234" #sys.argv[3]
+# password = app.config.get('password')
+# connect = ("dbname="+dbname+ " user="+user+ " password="+password)
+connect = ("dbname="+dbname+ " user="+user)
 print(connect)
 conn = psycopg2.connect(connect)
 cur = conn.cursor()
@@ -30,4 +30,4 @@ def output():
     print(command)
     cur.execute(command)
     records = cur.fetchall()
-    return render_template("outpage.html", name=str(records))
+    return render_template("outpage.html", name=(records))

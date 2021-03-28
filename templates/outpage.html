@@ -2,6 +2,22 @@
 
 {% block body %}
 
-    {{ name }}
+    <h1>Songs</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Song</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for song in name %}
+                <tr>
+                    <td>{{ song[0] }}</td>
+                    <td>{{ song[1] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}
