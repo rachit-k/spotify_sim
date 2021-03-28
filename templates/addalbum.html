@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+
+<div class="container">
+    <div class="col-md-7 col-lg-8">
+        <form action="/output" method="post">
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <label for="Album" class="form-label">Album</label>
+                    <input type="text" autocomplete="off" class="form-control" id="Album" placeholder="" value="">
+                    <div class="invalid-feedback">
+                      Valid Album is required.
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="Album Link" class="form-label">Album Link</label>
+                    <input type="text" autocomplete="off" class="form-control" id="Album Link" placeholder="" value="">
+                    <div class="invalid-feedback">
+                        Valid Album Link is required.
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="Album Type" class="form-label">Album Type</label>
+                    <input type="text" autocomplete="off" class="form-control" id="Album Type" placeholder="" value="">
+                    <div class="invalid-feedback">
+                        Valid Album Type is required.
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="Popularity" class="form-label">Popularity</label>
+                    <input type="text" autocomplete="off" class="form-control" id="Popularity" placeholder="" value="">
+                    <div class="invalid-feedback">
+                        Valid Popularity is required.
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <label for="Release Date" class="form-label">Release Date</label>
+                    <input type="text" autocomplete="off" class="form-control" id="Release Date" placeholder="" value="">
+                    <div class="invalid-feedback">
+                        Valid Release Date is required.
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <label for="Precision Date" class="form-label">Precision Date</label>
+                    <input type="text" autocomplete="off" class="form-control" id="Precision Date" placeholder="" value="">
+                    <div class="invalid-feedback">
+                        Valid Precision Date is required.
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <label for="Label" class="form-label">Label</label>
+                    <input type="text" autocomplete="off" class="form-control" id="Label" placeholder="" value="">
+                    <div class="invalid-feedback">
+                        Valid Label is required.
+                    </div>
+                </div>
+
+                <hr class="my-4">
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Submit</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

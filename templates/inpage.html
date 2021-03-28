@@ -2,10 +2,11 @@
 
 {% block body %}
 
-    <div class="container">
-    <div class="col-md-7 col-lg-8"> 
+<div class="container">
+  <div class="col-md-7 col-lg-8"> 
     <form action="/output" method="post">
         <div class="row g-3">
+          
             <div class="col-sm-4">
                 <label for="Artist" class="form-label">Artist</label>
                 <input type="text" autocomplete="off" class="form-control" id="Artist" name="Artist" placeholder="" value="">
@@ -13,6 +14,7 @@
                   Valid Artist is required.
                 </div>
             </div>
+
             <div class="col-sm-4">
                 <label for="Album" class="form-label">Album</label>
                 <input type="text" autocomplete="off" class="form-control" id="Album" placeholder="" value="">
@@ -169,7 +171,7 @@
         </div>
     </form>
     
-    </div>
-    </div>
+  </div>
+</div>
 
 {% endblock %}
