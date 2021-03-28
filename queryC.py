@@ -1,7 +1,7 @@
 from codeval import code2val, pcode2val, lcode2val, tcode2val
 
 def queryCreatorHelper(form, where_head):
-    song = form.get("song")
+    song = form.get("Song")
     if(not ( song is None or  not song)):
         where_head = where_head + " and song_name='"+song+"' "
     attributeList = [ "Danceability", "Acousticness", "Energy", "Instrumentalness", "Liveness", "Speechiness"]
