@@ -25,7 +25,7 @@ def queryCreatorHelper(form, where_head):
     return where_head
 
 def queryCreatorEmpty(form):
-    head = 'select song_name, song_link from song'
+    head = 'select song_name, link from song'
     where_head = " where true"
     return head+ queryCreatorHelper(form, where_head) + " limit 10"
 
@@ -45,6 +45,7 @@ def queryCreatorArtistAlbum(form, artist, album):
     where_head = where_head + " and artist_name = '"+artist+"'"
     where_head = where_head + " and album_name = '"+album+"'"
     return head+ queryCreatorHelper(form, where_head) + " limit 10"
+
 def queryCreator(form):
     artist = form.get("Artist")
     album = form.get("Album")
