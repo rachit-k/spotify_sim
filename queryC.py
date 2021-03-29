@@ -68,33 +68,35 @@ def DelQueryCreatorLink(form):
 
 def valueCreator(attrlist):
     ret = ""
-    ret = ret + str(attrlist)[1:-1] +");"
+    ret = ret + str(attrlist)[1:-1] +")"
     return ret
 def InsQueryCreatorLink(form):
-    link = form.get("Link")
+    link = form.get("Song Link")
     id = link.split("/")[-1]
+    addendum = ' ON CONFLICT DO NOTHING;'
     song_db, song_art_db, alb_art_db, album_db, artist_db, genre_db = getAttributes(id)
     print(song_db)
     #song insert
-    song_query = "Insert into song values (" + valueCreator(song_db)
+    song_query = "Insert into song values (" + valueCreator(song_db) + addendum
     #artist insert
     artist_query = ""
+
     for a in artist_db:
-        artist_query =  artist_query + "Insert into artist values ("+valueCreator(a) +"\n"
+        artist_query =  artist_query + "Insert into artist values ("+valueCreator(a) + addendum +"\n"
     #album insert
-    album_query = "Insert into album values ("+valueCreator(album_db)
+    album_query = "Insert into album values ("+valueCreator(album_db) +addendum
     #song_artist insert
     song_art_query = ""
     for atlist in song_art_db:
-        song_art_query = song_art_query + "Insert into artist_song values (" + valueCreator(atlist)+"\n"
+        song_art_query = song_art_query + "Insert into artist_song values (" + valueCreator(atlist)+addendum+"\n"
     #album_artist insert
     album_art_query = ""
     for atlist in alb_art_db:
-        album_art_query = album_art_query + "Insert into album_artist values (" + valueCreator(atlist)+"\n"
+        album_art_query = album_art_query + "Insert into album_artist values (" + valueCreator(atlist)+addendum+"\n"
     #genre_db insert
     art_genre_query = ""
     for atlist in genre_db:
-        art_genre_query = art_genre_query + "Insert into artist_genre values (" + valueCreator(atlist)+"\n"
+        art_genre_query = art_genre_query + "Insert into artist_genre values (" + valueCreator(atlist)+addendum+"\n"
     return "BEGIN;" + "\n" + artist_query + album_query+ "\n" + song_query + "\n" + song_art_query + album_art_query + art_genre_query +"COMMIT;"
 
     
