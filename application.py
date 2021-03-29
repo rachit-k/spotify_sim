@@ -40,6 +40,22 @@ def addartist():
 def addalbum():
     return render_template("addalbum.html")
 
+@app.route("/addsuccess", methods=["POST"])
+def addsuccess():
+    return render_template("addsuccess.html")
+
+@app.route("/addfailure", methods=["POST"])
+def addfailure():
+    return render_template("addfailure.html")
+
+@app.route("/deletesuccess", methods=["POST"])
+def deletesuccess():
+    return render_template("deletesuccess.html")
+
+@app.route("/deletefailure", methods=["POST"])
+def deletefailure():
+    return render_template("deletefailure.html")
+
 @app.route("/output", methods=["POST"])
 def output():
     command = queryCreator(request.form)
