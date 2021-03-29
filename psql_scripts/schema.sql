@@ -143,3 +143,28 @@ drop table artist_songtemp;
 \copy artist_genretemp from '~/Coding/DBMS/Project/My Data/genre_artist.csv' delimiter ',' csv header;
 insert into artist_genre select distinct on (artist_id, genre)  * from artist_genretemp;
 drop table artist_genretemp;
+
+---alterations--
+alter table artist_song
+drop constraint song_ref,
+add constraint song_ref foreign key(song_id) references song(song_id)  on delete cascade DEFERRABLE;
+
+alter table artist_song
+drop constraint artist_ref,
+add constraint artist_ref foreign key(artist_id) references artist(artist_id)  on delete cascade DEFERRABLE;
+
+alter table song
+drop constraint album_ref,
+add constraint album_ref foreign key(album_id) references album(album_id) on delete set NULL DEFERRABLE;
+
+alter table album_artist
+drop constraint song_ref,
+add constraint song_ref foreign key(song_id) references song(song_id)  on delete cascade DEFERRABLE;
+
+alter table album_artist
+drop constraint artist_ref,
+add constraint artist_ref foreign key(artist_id) references artist(artist_id)  on delete cascade DEFERRABLE;
+
+alter table artist_genre
+drop constraint artist_ref,
+add constraint artist_ref foreign key(artist_id) references artist(artist_id)  on delete cascade DEFERRABLE;
