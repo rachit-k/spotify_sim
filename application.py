@@ -20,9 +20,41 @@ cur = conn.cursor()
 def welcome():
     return render_template("welcome.html")
 
-@app.route("/input", methods=["GET"])
-def input():
+@app.route("/search", methods=["GET"])
+def search():
     return render_template("inpage.html")
+
+@app.route("/delete", methods=["GET"])
+def delete():
+    return render_template("delete.html")
+
+@app.route("/addsong", methods=["GET"])
+def addsong():
+    return render_template("addsong.html")
+
+@app.route("/addartist", methods=["GET"])
+def addartist():
+    return render_template("addartist.html")
+
+@app.route("/addalbum", methods=["GET"])
+def addalbum():
+    return render_template("addalbum.html")
+
+@app.route("/addsuccess", methods=["POST"])
+def addsuccess():
+    return render_template("addsuccess.html")
+
+@app.route("/addfailure", methods=["POST"])
+def addfailure():
+    return render_template("addfailure.html")
+
+@app.route("/deletesuccess", methods=["POST"])
+def deletesuccess():
+    return render_template("deletesuccess.html")
+
+@app.route("/deletefailure", methods=["POST"])
+def deletefailure():
+    return render_template("deletefailure.html")
 
 @app.route("/output", methods=["POST"])
 def output():
