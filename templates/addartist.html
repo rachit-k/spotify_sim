@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="container">
+    <div class="col-md-7 col-lg-8">
+        <form action="/addsuccess" method="post">
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <label for="Artist" class="form-label">Artist</label>
+                    <input type="text" autocomplete="off" class="form-control" id="Artist" name="Artist" placeholder="" value="">
+                    <div class="invalid-feedback">
+                        Valid Artist is required.
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="Artist Link" class="form-label">Artist Link</label>
+                    <input type="text" autocomplete="off" class="form-control" id="Artist Link" placeholder="" value="">
+                    <div class="invalid-feedback">
+                        Valid Artist Link is required.
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="Artist Type" class="form-label">Artist Type</label>
+                    <input type="text" autocomplete="off" class="form-control" id="Artist Type" placeholder="" value="">
+                    <div class="invalid-feedback">
+                        Valid Artist Type is required.
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="Popularity" class="form-label">Popularity</label>
+                        <input type="text" autocomplete="off" class="form-control" id="Popularity" placeholder=""
+                            value="">
+                        <div class="invalid-feedback">
+                            Valid Popularity is required.
+                        </div>
+                </div>
+
+                <hr class="my-4">
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Submit</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
