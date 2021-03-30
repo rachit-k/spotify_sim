@@ -46,7 +46,7 @@ def queryCreatorArtistAlbum(form, artist, album):
     where_head = where_head + " and album_name = '"+album+"'"
     return head+ queryCreatorHelper(form, where_head) + " limit 10"
 
-def queryCreator(form):
+def queryCreatorSong(form):
     artist = form.get("Artist")
     album = form.get("Album")
     if((artist is None or not artist) and (album is None or not album)):
@@ -103,4 +103,18 @@ def InsQueryCreatorLink(form):
         art_genre_query = art_genre_query + "Insert into artist_genre values (" + valueCreator(atlist)+addendum+"\n"
     return "BEGIN;" + "\n" + artist_query + album_query+ "\n" + song_query + "\n" + song_art_query + album_art_query + art_genre_query +"COMMIT;"
 
-    
+def getGenresQueryCreator(minfol, maxfol, pop):
+    head = "select genre, count(genre) from simple_genre_view"
+    where_head = "where true"
+    if(minfol is not None and minfol):
+        where_head = where_head + "and followers >="+str(minfol)
+    if(maxfol is not None and maxfol):
+        where_head = where_head + "and followers >="+str(maxfol)
+    p = "Popularity"
+    attval = pop
+    if(not ( attval is None or  not attval)):
+        where_head = where_head + " and " + p + ">=" +str(pcode2val(attval)[0])+ " and " +p + "<" +str(pcode2val(attval)[1])
+    return head+where_head +"order by count desc limit 10;"
+
+def trendQueryCreator(form):
+    target = form.get("Target")
