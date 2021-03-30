@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from queryC import queryCreator, InsQueryCreatorLink
+from queryC import queryCreator, InsQueryCreatorLink, DelQueryCreator
 import psycopg2 
 import sys
 
@@ -54,6 +54,9 @@ def addfailure():
 
 @app.route("/deletesuccess", methods=["POST"])
 def deletesuccess():
+    command = DelQueryCreator(request.form)
+    print(command)
+    cur.execute(command)
     return render_template("deletesuccess.html")
 
 @app.route("/deletefailure", methods=["POST"])
