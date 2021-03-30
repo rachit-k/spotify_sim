@@ -49,3 +49,14 @@ On song(artist_name);
 Select song.song_id, song_name, song.album_id, song.link as song_link, length, song.popularity, danceability, acousticness, energy, instrumentalness, liveness, loudness, speechiness, tempo, artist.artist_id, artist_name, artist.link as artist_link, image_link, artist.popularity as art_pop, artist_type, followers, type_album, album_name, album.link as album_link, album.popularity as al_pop, release_date, label
 From song, artist, album, artist_song
 Where song.song_id=artist_song.song_id and artist.artist_id=artist_song.artist_id and song.album_id=album.album_id;
+
+create materialized view my_genre_view as
+select a.artist_id, artist_name, link as artist_link, image_link, popularity, artist_type, followers, array_agg(genre) as genres
+from artist as a, artist_genre as g
+where a.artist_id = g.artist_id group by a.artist_id;
+
+create view simple_genre_view as
+select artist_id, artist_name, artist_link, image_link, popularity, artist_type, followers, unnest(genres) as genre
+from my_genre_view;
+
+select genre, count(genre) from simple_genre_view where followers>100000 group by genre order by count desc;
