@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from queryC import queryCreator, InsQueryCreatorLink, DelQueryCreator
+from queryC import queryCreatorSong, InsQueryCreatorLink, DelQueryCreator
 import psycopg2 
 import sys
 
@@ -65,7 +65,7 @@ def deletefailure():
 
 @app.route("/output", methods=["POST"])
 def output():
-    command = queryCreator(request.form)
+    command = queryCreatorSong(request.form)
     print(command)
     cur.execute(command)
     records = cur.fetchall()
