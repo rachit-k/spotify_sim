@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="container">
+    <div class="col-md-7 col-lg-8"> 
+      <form action="/addsuccess" method="post">
+          <div class="row g-3">
+              <div class="col-sm-6">
+                  <label for="Song Link" class="form-label">Song Link</label>
+                  <input type="text" autocomplete="off" class="form-control" id="Song Link" placeholder="" value="" required>
+                  <div class="invalid-feedback">
+                    Valid Song Link is required.
+                  </div>
+              </div>               
+              <hr class="my-4">
+              <button class="w-100 btn btn-primary btn-lg" type="submit">Submit</button>
+          </div>
+      </form>
+      
+    </div>
+  </div>
+
+{% endblock %}

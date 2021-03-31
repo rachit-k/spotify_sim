@@ -5,14 +5,14 @@ import sys
 
 app = Flask(__name__)
 
-app.config['dbname'] = "sample" #sys.argv[1]
+app.config['dbname'] = "db" #sys.argv[1]
 app.config['user'] = "postgres" #sys.argv[2]
 dbname = app.config.get('dbname')
 user = app.config.get('user')
-app.config['password'] = "qmwnebrv1234" #sys.argv[3]
-password = app.config.get('password')
-connect = ("dbname="+dbname+ " user="+user+ " password="+password)
-# connect = ("dbname="+dbname+ " user="+user)
+# app.config['password'] = "qmwnebrv1234" #sys.argv[3]
+# password = app.config.get('password')
+# connect = ("dbname="+dbname+ " user="+user+ " password="+password)
+connect = ("dbname="+dbname+ " user="+user)
 print(connect)
 conn = psycopg2.connect(connect)
 cur = conn.cursor()
@@ -39,6 +39,22 @@ def addartist():
 @app.route("/addalbum", methods=["GET"])
 def addalbum():
     return render_template("addalbum.html")
+
+@app.route("/addusinglink", methods=["GET"])
+def addusinglink():
+    return render_template("addusinglink.html")
+
+@app.route("/trendgenre", methods=["GET"])
+def trendgenre():
+    return render_template("trendgenre.html")
+
+@app.route("/trendartist", methods=["GET"])
+def trendartist():
+    return render_template("trendartist.html")
+
+@app.route("/trendalbum", methods=["GET"])
+def trendalbum():
+    return render_template("trendalbum.html")
 
 @app.route("/addsuccess", methods=["POST"])
 def addsuccess():

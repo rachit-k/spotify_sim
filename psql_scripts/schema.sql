@@ -116,31 +116,31 @@ create table artist_genre(
     constraint artist_ref foreign key(artist_id) references artist(artist_id)
 );
 
-\copy albumtemp from '~/Coding/DBMS/Project/My Data/album_dbc.csv' delimiter ',' csv header;
+\copy albumtemp from '../../MyData/album_dbc.csv' delimiter ',' csv header;
 insert into album select distinct on (album_id)  * from albumtemp;
 drop table albumtemp;
 
 
-\copy artiststemp from '~/Coding/DBMS/Project/My Data/artist_db.csv' delimiter ',' csv header;
+\copy artiststemp from '../../MyData/artist_db.csv' delimiter ',' csv header;
 insert into artist select distinct on (artist_id)  * from artiststemp;
 drop table artiststemp;
 
 
-\copy songstemp from '~/Coding/DBMS/Project/My Data/song_db.csv' delimiter ',' csv header;
+\copy songstemp from '../../MyData/song_db.csv' delimiter ',' csv header;
 insert into song select distinct on (song_id)  * from songstemp;
 drop table songstemp;
 
-\copy album_artisttemp from '~/Coding/DBMS/Project/My Data/album_artist.csv' delimiter ',' csv header;
+\copy album_artisttemp from '../../MyData/album_artist.csv' delimiter ',' csv header;
 insert into album_artist select distinct on (album_id,artist_id)  * from album_artisttemp;
 drop table album_artisttemp;
 
 
-\copy artist_songtemp from '~/Coding/DBMS/Project/My Data/artist_song.csv' delimiter ',' csv header;
+\copy artist_songtemp from '../../MyData/artist_song.csv' delimiter ',' csv header;
 insert into artist_song select distinct on (song_id,artist_id)  * from artist_songtemp;
 drop table artist_songtemp;
 
 
-\copy artist_genretemp from '~/Coding/DBMS/Project/My Data/genre_artist.csv' delimiter ',' csv header;
+\copy artist_genretemp from '../../MyData/genre_artist.csv' delimiter ',' csv header;
 insert into artist_genre select distinct on (artist_id, genre)  * from artist_genretemp;
 drop table artist_genretemp;
 

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="container">
+    <div class="col-md-7 col-lg-8">
+        <form action="/output" method="post">
+            <div class="row g-3">
+                <div class="col-sm-4">
+                    <label for="minfol" class="form-label">Minimum Followers</label>
+                    <input type="number" autocomplete="off" class="form-control" id="minfol" name="minfol" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                      Valid Minimum Followers is required.
+                    </div>
+                </div>
+    
+                <div class="col-sm-4">
+                    <label for="maxfol" class="form-label">Maximum Followers</label>
+                    <input type="number" autocomplete="off" class="form-control" id="maxfol" name="maxfol" placeholder="" value="">
+                    <div class="invalid-feedback">
+                      Valid Maximum Followers is required.
+                    </div>
+                </div>
+    
+                <div class="col-md-4">
+                    <label for="Popularity" class="form-label">Popularity</label>
+                    <select class="form-select" id="Popularity" name="Popularity">
+                      <option value="0">Very Low</option>
+                      <option value="1">Low</option>
+                      <option value="2">Medium</option>
+                      <option value="3">High</option>
+                      <option value="4">Very High</option>
+                      <option value="" selected>Choose...</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please select valid Popularity.
+                    </div>
+                </div>
+
+                <hr class="my-4">
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Submit</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
