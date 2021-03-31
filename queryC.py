@@ -116,5 +116,28 @@ def getGenresQueryCreator(minfol, maxfol, pop):
         where_head = where_head + " and " + p + ">=" +str(pcode2val(attval)[0])+ " and " +p + "<" +str(pcode2val(attval)[1])
     return head+where_head +"order by count desc limit 10;"
 
-def trendQueryCreator(form):
-    target = form.get("Target")
+def getYearSongTrends(form):
+    start = form.get('From')
+    end = form.get('To')
+    num = form.get('Num')
+    if(num is None or not num):
+        num = 3
+    else:
+        num = int(num)
+    query = 'select song_id, song_name, song_link from pop_year_song'
+    where_head = "where rank<="+str(num)
+    where_head = where_head + " and year <="+str(end) + " and year>="+str(start)
+    return query+where_head
+
+def getYearAlbumTrends(form):
+    start = form.get('From')
+    end = form.get('To')
+    num = form.get('Num')
+    if(num is None or not num):
+        num = 3
+    else:
+        num = int(num)
+    query = 'select album_id, album_name, album_link from pop_year_album'
+    where_head = "where rank<="+str(num)
+    where_head = where_head + " and year <="+str(end) + " and year>="+str(start)
+    return query+where_head
