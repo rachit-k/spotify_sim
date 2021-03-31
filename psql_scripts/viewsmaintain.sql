@@ -59,4 +59,14 @@ create view simple_genre_view as
 select artist_id, artist_name, artist_link, image_link, popularity, artist_type, followers, unnest(genres) as genre
 from my_genre_view;
 
-select genre, count(genre) from simple_genre_view where followers>100000 group by genre order by count desc;
+
+create materialized view song_year as
+select song_id, song_name, date_part('year', release_date) as year, song.popularity, song.link as song_link
+from song, album
+where song.album_id=album.album_id;
+
+create materialized view pop_year_song as
+select song_id, song_name, song_link, popularity, year, row_number() over (partition by year order by popularity desc, song_name, song_id) as rank from song_year order by year;
+
+create materialized view pop_year_album as
+select album_id, album_name, link as album_link, popularity, date_part('year', release_date) as year, row_number() over (partition by date_part('year', release_date) order by popularity desc, album_name, album_id) as rank from album order by year;
