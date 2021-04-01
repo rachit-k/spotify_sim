@@ -2,8 +2,9 @@
 
 {% block body %}
 
-    <h1>Songs</h1>
-    <table>
+<div class="py-5 text-center">
+    <!-- <h1>Songs</h1> -->
+    <table class="table table-striped table-sm">
         <thead>
             <tr>
                 <th>Album</th>
@@ -16,10 +17,11 @@
                 <tr>
                     <td>{{ song[1] }}</td>
                     <td>{{ song[3] }}</td>
-                    <td>{{ song[4] }}</td>
+                    <td>{{ (song[4])|int  }}</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+</div>
 
 {% endblock %}
