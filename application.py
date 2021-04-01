@@ -5,14 +5,14 @@ import sys
 
 app = Flask(__name__)
 
-app.config['dbname'] = "db" #sys.argv[1]
+app.config['dbname'] = "sample" #sys.argv[1]
 app.config['user'] = "postgres" #sys.argv[2]
 dbname = app.config.get('dbname')
 user = app.config.get('user')
-# app.config['password'] = "qmwnebrv1234" #sys.argv[3]
-# password = app.config.get('password')
-# connect = ("dbname="+dbname+ " user="+user+ " password="+password)
-connect = ("dbname="+dbname+ " user="+user)
+app.config['password'] = "qmwnebrv1234" #sys.argv[3]
+password = app.config.get('password')
+connect = ("dbname="+dbname+ " user="+user+ " password="+password)
+# connect = ("dbname="+dbname+ " user="+user)
 print(connect)
 conn = psycopg2.connect(connect)
 cur = conn.cursor()
@@ -88,7 +88,7 @@ def output():
     return render_template("outpage.html", name=(records))
 
 @app.route("/outputtrgenres", methods=["POST"])
-def output():
+def outputGenres():
     command = getGenresTrends(request.form)
     print(command)
     cur.execute(command)
@@ -96,7 +96,7 @@ def output():
     return render_template("outputtrgenres.html", name=(records))
 
 @app.route("/outputtrsong", methods=["POST"])
-def output():
+def outputSong():
     command = getYearSongTrends(request.form)
     print(command)
     cur.execute(command)
@@ -104,7 +104,7 @@ def output():
     return render_template("outputtrsong.html", name=(records))
 
 @app.route("/outputtralbum", methods=["POST"])
-def output():
+def outputAlbum():
     command = getYearAlbumTrends(request.form)
     print(command)
     cur.execute(command)
