@@ -1,18 +1,19 @@
 from flask import Flask, render_template, request
-from queryC import queryCreatorSong, InsQueryCreatorLink, DelQueryCreator, getGenresTrends, getYearSongTrends, getYearAlbumTrends
+from queryC import queryCreatorSong, InsQueryCreatorLink, DelQueryCreator, getGenresTrends, getYearSongTrends, getYearAlbumTrends, insertQueryAlbumAdd, insertQuerySongAdd, insertQueryArtistAdd
 import psycopg2 
 import sys
+import copy
 
 app = Flask(__name__)
 
-app.config['dbname'] = "db" #sys.argv[1]
+app.config['dbname'] = "sample" #sys.argv[1]
 app.config['user'] = "postgres" #sys.argv[2]
 dbname = app.config.get('dbname')
 user = app.config.get('user')
 app.config['password'] = "qmwnebrv1234" #sys.argv[3]
 password = app.config.get('password')
-# connect = ("dbname="+dbname+ " user="+user+ " password="+password)
-connect = ("dbname="+dbname+ " user="+user)
+connect = ("dbname="+dbname+ " user="+user+ " password="+password)
+# connect = ("dbname="+dbname+ " user="+user)
 print(connect)
 conn = psycopg2.connect(connect)
 cur = conn.cursor()
@@ -58,10 +59,22 @@ def trendalbum():
 
 @app.route("/addsuccess", methods=["POST"])
 def addsuccess():
-    print("Here we are")
-    command = InsQueryCreatorLink(request.form)
+    f = request.form.to_dict()
+    del f['submit']
+    print("Form is "+str(request.form))
+    if(request.form.get('submit')=='Album'):
+        command = insertQueryAlbumAdd(f)
+    elif (request.form.get('submit')=='Artist'):
+        command = insertQueryArtistAdd(f)
+    elif (request.form.get('submit')=='Song'):
+        command = insertQuerySongAdd(f)
+    elif (request.form.get('submit')=='SongL'):
+        command = InsQueryCreatorLink(f)
+    else:
+        return render_template("addfailure.html")
     print(command)
-    cur.execute(command)
+    cur.execute("Begin;"+"\n"+command+"Commit;")
+    print("Command Executed")
     return render_template("addsuccess.html")
 
 @app.route("/addfailure", methods=["POST"])
