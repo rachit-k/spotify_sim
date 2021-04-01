@@ -142,3 +142,34 @@ def getYearAlbumTrends(form):
     where_head = "where rank<="+str(num)
     where_head = where_head + " and year <="+str(end) + " and year>="+str(start)
     return query+where_head
+
+def createId(link_name):
+    return str(link_name)+"ohyes"
+
+def columnCreator(keylist):
+    ret = ""
+    for l in keylist:
+        ret = ret+str(l) + ","
+    return ret[:-1]
+
+def insertQueryAlbumAdd(form):
+    query = "Insert into album" + "(album_id,"+columnCreator(form.keys())+")" + " values("
+    attlist=[createId(form.get('link'))]
+    attlist.extend(form.values())
+    query = query + valueCreator(attlist) +";"
+    return query
+
+def insertQueryArtistAdd(form):
+    query = "Insert into artist" + "(artist_id,"+columnCreator(form.keys())+")" + " values("
+    attlist=[createId(form.get('link'))]
+    attlist.extend(form.values())
+    print(attlist)
+    query = query + valueCreator(attlist) +";"
+    return query
+
+def insertQuerySongAdd(form):
+    query = "Insert into song" + "(song_id,"+columnCreator(form.keys())+")" + " values("
+    attlist=[createId(form.get('link'))]
+    attlist.extend(form.values())
+    query = query + valueCreator(attlist) +";"
+    return query
