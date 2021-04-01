@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from queryC import queryCreatorSong, InsQueryCreatorLink, DelQueryCreator
+from queryC import queryCreatorSong, InsQueryCreatorLink, DelQueryCreator, getGenresTrends, getYearSongTrends, getYearAlbumTrends
 import psycopg2 
 import sys
 
@@ -48,9 +48,9 @@ def addusinglink():
 def trendgenre():
     return render_template("trendgenre.html")
 
-@app.route("/trendartist", methods=["GET"])
+@app.route("/trendsong", methods=["GET"])
 def trendartist():
-    return render_template("trendartist.html")
+    return render_template("trendsong.html")
 
 @app.route("/trendalbum", methods=["GET"])
 def trendalbum():
@@ -86,3 +86,27 @@ def output():
     cur.execute(command)
     records = cur.fetchall()
     return render_template("outpage.html", name=(records))
+
+@app.route("/outputtrgenres", methods=["POST"])
+def output():
+    command = getGenresTrends(request.form)
+    print(command)
+    cur.execute(command)
+    records = cur.fetchall()
+    return render_template("outputtrgenres.html", name=(records))
+
+@app.route("/outputtrsong", methods=["POST"])
+def output():
+    command = getYearSongTrends(request.form)
+    print(command)
+    cur.execute(command)
+    records = cur.fetchall()
+    return render_template("outputtrsong.html", name=(records))
+
+@app.route("/outputtralbum", methods=["POST"])
+def output():
+    command = getYearAlbumTrends(request.form)
+    print(command)
+    cur.execute(command)
+    records = cur.fetchall()
+    return render_template("outputtralbum.html", name=(records))
