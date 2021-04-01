@@ -104,28 +104,28 @@ def InsQueryCreatorLink(form):
     return "BEGIN;" + "\n" + artist_query + album_query+ "\n" + song_query + "\n" + song_art_query + album_art_query + art_genre_query +"COMMIT;"
 
 def getGenresQueryCreatorHelp(minfol, maxfol, pop):
-    head = "select genre, count(genre) from simple_genre_view"
+    head = "select genre, count(genre) from simple_genre_view "
     where_head = "where true"
     if(minfol is not None and minfol):
-        where_head = where_head + "and followers >="+str(minfol)
+        where_head = where_head + " and followers >="+str(minfol)
     if(maxfol is not None and maxfol):
-        where_head = where_head + "and followers >="+str(maxfol)
+        where_head = where_head + " and followers <="+str(maxfol)
     p = "Popularity"
     attval = pop
     if(not ( attval is None or  not attval)):
         where_head = where_head + " and " + p + ">=" +str(pcode2val(attval)[0])+ " and " +p + "<" +str(pcode2val(attval)[1])
-    return head+where_head +"order by count desc limit 10;"
+    return head+where_head +" group by genre order by count desc limit 10;"
 def getGenresTrends(form):
     return getGenresQueryCreatorHelp(form.get("minfol"), form.get("maxfol"), form.get("Popularity"))
 def getYearSongTrends(form):
     start = form.get('From')
     end = form.get('To')
-    num = form.get('Num')
+    num = form.get('num')
     if(num is None or not num):
         num = 3
     else:
         num = int(num)
-    query = 'select song_id, song_name, song_link from pop_year_song'
+    query = 'select song_id, song_name, song_link, rank, year from pop_year_song '
     where_head = "where rank<="+str(num)
     where_head = where_head + " and year <="+str(end) + " and year>="+str(start)
     return query+where_head
@@ -133,12 +133,12 @@ def getYearSongTrends(form):
 def getYearAlbumTrends(form):
     start = form.get('From')
     end = form.get('To')
-    num = form.get('Num')
+    num = form.get('num')
     if(num is None or not num):
         num = 3
     else:
         num = int(num)
-    query = 'select album_id, album_name, album_link from pop_year_album'
+    query = 'select album_id, album_name, album_link, rank, year from pop_year_album '
     where_head = "where rank<="+str(num)
     where_head = where_head + " and year <="+str(end) + " and year>="+str(start)
     return query+where_head
