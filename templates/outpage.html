@@ -14,7 +14,12 @@
             {% for song in name %}
                 <tr>
                     <td>{{ song[0] }}</td>
-                    <td>{{ song[1] }}</td>
+                    <td>            <a href="{{ song[1] }}" class="icon-link">
+                        Play
+                        <svg class="bi" width="1em" height="1em">
+                            <use xlink:href="#chevron-right" />
+                        </svg>
+                    </a></td>
                 </tr>
             {% endfor %}
         </tbody>
