@@ -2,12 +2,17 @@
 
 {% block body %}
 
+<div class="py-5 text-center">
+    <p class="lead"> Enter Previleged Mode:
+        <input id='password' type='text'/></p>
+</div>
+
 <div class="container py-5" id="featured-3">
     <div class="row g-5 py-5">
         <div class="feature col-md-4">
             <h2>Add a Song</h2>
             <p>Privileged Instruction</p>
-            <a href="/addsong" class="icon-link">
+            <a href="/addsong" class="icon-link" onclick="javascript:return validatePass()">
                 Add Song
                 <svg class="bi" width="1em" height="1em">
                     <use xlink:href="#chevron-right" />
@@ -17,7 +22,7 @@
         <div class="feature col-md-4">
             <h2>Add an Artist</h2>
             <p>Privileged Instruction</p>
-            <a href="/addartist" class="icon-link">
+            <a href="/addartist" class="icon-link" onclick="javascript:return validatePass()">
                 Add Artist
                 <svg class="bi" width="1em" height="1em">
                     <use xlink:href="#chevron-right" />
@@ -27,7 +32,7 @@
         <div class="feature col-md-4">
             <h2>Add an Album</h2>
             <p>Privileged Instruction</p>
-            <a href="/addalbum" class="icon-link">
+            <a href="/addalbum" class="icon-link" onclick="javascript:return validatePass()">
                 Add Album
                 <svg class="bi" width="1em" height="1em">
                     <use xlink:href="#chevron-right" />

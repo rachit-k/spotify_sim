@@ -32,10 +32,23 @@
 
         <div class="py-5 text-center">
             <h2>Spotify Simulator</h2>
-            <p class="lead"> some text</p>
+            <!-- <p class="lead"> Enter Previleged Mode:
+                <input id='password' type='text'/></p> -->
         </div>
 
+
         {% block body %}{% endblock %}
+
+        <script>
+            function validatePass(){
+                if(document.getElementById('password').value == 'abcd'){ 
+                    return true;
+                }else{
+                    alert('wrong password!!');
+                    return false;
+                }
+            }
+        </script>
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
             <p class="mb-1">&copy; Priyanshu Gautam, Rachit Kumar</p>
