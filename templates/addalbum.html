@@ -8,7 +8,7 @@
             <div class="row g-3">
                 <div class="col-sm-6">
                     <label for="Album" class="form-label">Album</label>
-                    <input type="text" autocomplete="off" class="form-control" id="Album" placeholder="" value="" required>
+                    <input type="text" autocomplete="off" class="form-control" name="Album_name" id="Album" placeholder="" value="" required>
                     <div class="invalid-feedback">
                       Valid Album is required.
                     </div>
@@ -16,7 +16,7 @@
 
                 <div class="col-sm-6">
                     <label for="Album Link" class="form-label">Album Link</label>
-                    <input type="text" autocomplete="off" class="form-control" id="Album Link" placeholder="" value="" required>
+                    <input type="text" autocomplete="off" class="form-control" name="link" id="Album Link" placeholder="" value="" required>
                     <div class="invalid-feedback">
                         Valid Album Link is required.
                     </div>
@@ -24,7 +24,7 @@
 
                 <div class="col-sm-6">
                     <label for="Album Type" class="form-label">Album Type</label>
-                    <input type="text" autocomplete="off" class="form-control" id="Album Type" placeholder="" value="" required>
+                    <input type="text" autocomplete="off" class="form-control" name="Type" id="Album Type" placeholder="" value="" required>
                     <div class="invalid-feedback">
                         Valid Album Type is required.
                     </div>
@@ -32,7 +32,7 @@
 
                 <div class="col-sm-6">
                     <label for="Popularity" class="form-label">Popularity</label>
-                    <input type="number" autocomplete="off" class="form-control" id="Popularity" placeholder="" value="" required>
+                    <input type="number" autocomplete="off" class="form-control" name="Popularity" id="Popularity" placeholder="" value="" required>
                     <div class="invalid-feedback">
                         Valid Popularity is required.
                     </div>
@@ -40,30 +40,37 @@
 
                 <div class="col-sm-4">
                     <label for="Release Date" class="form-label">Release Date</label>
-                    <input type="date" autocomplete="off" class="form-control" id="Release Date" placeholder="" value="" required>
+                    <input type="date" autocomplete="off" class="form-control" name="Release_Date" id="Release Date" placeholder="" value="" required>
                     <div class="invalid-feedback">
                         Valid Release Date is required.
                     </div>
                 </div>
 
                 <div class="col-sm-4">
-                    <label for="Precision Date" class="form-label">Precision Date</label>
-                    <input type="date" autocomplete="off" class="form-control" id="Precision Date" placeholder="" value="" required>
+                    <label for="precision_date" class="form-label">Precision</label>
+                    <input type="text" autocomplete="off" class="form-control" name="precision_date" id="precision_date" placeholder="" value="" required>
                     <div class="invalid-feedback">
-                        Valid Precision Date is required.
+                        Valid Release Date is required.
                     </div>
                 </div>
 
                 <div class="col-sm-4">
                     <label for="Label" class="form-label">Label</label>
-                    <input type="text" autocomplete="off" class="form-control" id="Label" placeholder="" value="" required>
+                    <input type="text" autocomplete="off" class="form-control" name="Label" id="Label" placeholder="" value="" required>
+                    <div class="invalid-feedback">
+                        Valid Label is required.
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <label for="Number of Tracks" class="form-label">Number of Tracks</label>
+                    <input type="number" autocomplete="off" class="form-control" name="num_tracks" id="Number of Tracks" placeholder="" value="" required>
                     <div class="invalid-feedback">
                         Valid Label is required.
                     </div>
                 </div>
 
                 <hr class="my-4">
-                <button class="w-100 btn btn-primary btn-lg" type="submit">Submit</button>
+                <button name='submit' value='Album' class="w-100 btn btn-primary btn-lg" type="submit">Submit</button>
             </div>
         </form>
 
