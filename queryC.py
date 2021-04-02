@@ -81,11 +81,11 @@ def valueCreator(attrlist):
 def InsQueryCreatorLink(form):
     link = form.get("Song Link")
     id = createId(link)
-    addendum = ';'
+    addendum = ' ON CONFLICT DO NOTHING;'
     song_db, song_art_db, alb_art_db, album_db, artist_db, genre_db = getAttributes(id)
     print(song_db)
     #song insert
-    song_query = "Insert into song values (" + valueCreator(song_db) + addendum
+    song_query = "Insert into song values (" + valueCreator(song_db) + ";"
     #artist insert
     artist_query = ""
 
@@ -176,3 +176,4 @@ def insertQuerySongAdd(form):
     attlist.extend(form.values())
     query = query + valueCreator(attlist) +";"
     return query
+    
