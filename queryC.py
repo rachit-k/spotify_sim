@@ -23,7 +23,11 @@ def queryCreatorHelper(form, where_head):
     if(not ( attval is None or  not attval)):
         where_head = where_head + " and " + t + ">=" +str(tcode2val(attval)[0])+ " and " +t + "<" +str(tcode2val(attval)[1])
     return where_head
-
+def createId(link_name):
+    dotprod = link_name.split(".")
+    if 'spotify' in dotprod:
+        return link_name.split("/")[-1].split("?")[0]
+    return dotprod[1]+link_name.split("/")[-1].split("?")[0]
 def queryCreatorEmpty(form):
     head = 'select song_name, link from song'
     where_head = " where true"
@@ -76,8 +80,8 @@ def valueCreator(attrlist):
     return ret
 def InsQueryCreatorLink(form):
     link = form.get("Song Link")
-    id = link.split("/")[-1]
-    addendum = ' ON CONFLICT DO NOTHING;'
+    id = createId(link)
+    addendum = ';'
     song_db, song_art_db, alb_art_db, album_db, artist_db, genre_db = getAttributes(id)
     print(song_db)
     #song insert
@@ -143,8 +147,7 @@ def getYearAlbumTrends(form):
     where_head = where_head + " and year <="+str(end) + " and year>="+str(start)
     return query+where_head
 
-def createId(link_name):
-    return str(link_name)+"ohyes"
+
 
 def columnCreator(keylist):
     ret = ""
