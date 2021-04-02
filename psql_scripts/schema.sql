@@ -167,4 +167,4 @@ add constraint artist_ref foreign key(artist_id) references artist(artist_id)  o
 
 alter table artist_genre
 drop constraint artist_ref,
-add constraint artist_ref foreign key(artist_id) references artist(artist_id)  on delete cascade DEFERRABLE;
+add constraint artist_ref foreign key(artist_id) references artist(artist_id)  on delete cascade  on update set null DEFERRABLE;
