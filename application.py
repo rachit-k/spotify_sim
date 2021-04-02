@@ -19,7 +19,7 @@ print(connect)
 conn = psycopg2.connect(connect)
 cur = conn.cursor()
 def makeMessage(err_list):
-    return err_list[1]+" has occured via previous operation so aborting"
+    return str(err_list[1])+" has occured via previous operation so aborting"
 def executionQuery(cur, command):
     try:
         cur.execute(command)
