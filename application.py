@@ -18,11 +18,13 @@ connect = ("dbname="+dbname+ " user="+user+ " password="+password)
 print(connect)
 conn = psycopg2.connect(connect)
 cur = conn.cursor()
+def makeMessage(err_list):
+    return err_list[1]+" has occured via previous operation so aborting"
 def executionQuery(cur, command):
     try:
         cur.execute(command)
     except Exception as e:
-        return [type(e), e.pgerror], False
+        return [e, type(e), e.pgerror], False
     return cur.fetchall(), True
 @app.route("/", methods=["GET"])
 def welcome():
@@ -69,22 +71,26 @@ def addsuccess():
     f = request.form.to_dict()
     del f['submit']
     print("Form is "+str(request.form))
-    if(request.form.get('submit')=='Album'):
-        command = insertQueryAlbumAdd(f)
-    elif (request.form.get('submit')=='Artist'):
-        command = insertQueryArtistAdd(f)
-    elif (request.form.get('submit')=='Song'):
-        command = insertQuerySongAdd(f)
-    elif (request.form.get('submit')=='SongL'):
-        command = InsQueryCreatorLink(f)
-    else:
-        return render_template("addfailure.html")
+    try:
+        if(request.form.get('submit')=='Album'):
+            command = insertQueryAlbumAdd(f)
+        elif (request.form.get('submit')=='Artist'):
+            command = insertQueryArtistAdd(f)
+        elif (request.form.get('submit')=='Song'):
+            command = insertQuerySongAdd(f)
+        elif (request.form.get('submit')=='SongL'):
+            command = InsQueryCreatorLink(f)
+        else:
+            return render_template("addfailure.html")
+    except Exception:
+        return render_template("addfailure.html",  message = "Failure while creation of query")
     print("Command is "+command)
     ret_val, succ = executionQuery(cur, command)
+    print("ret val is "+str(ret_val))
     if(succ):
         return render_template("addsuccess.html")
     else:
-        return render_template("addfailure.html")
+        return render_template("addfailure.html",  message = makeMessage(ret_val))
 
 @app.route("/addfailure", methods=["POST"])
 def addfailure():
@@ -98,7 +104,7 @@ def deletesuccess():
     if(succ):
         return render_template("deletesuccess.html")
     else:
-        return render_template("deletefailure.html")
+        return render_template("deletefailure.html", message = makeMessage(ret_val))
 
 @app.route("/deletefailure", methods=["POST"])
 def deletefailure():
@@ -112,7 +118,7 @@ def output():
     if(succ):
         return render_template("outpage.html", name=(ret_val))
     else:
-        return render_template("deletefailure.html")
+        return render_template("deletefailure.html", message = makeMessage(ret_val))
 @app.route("/outputtrgenres", methods=["POST"])
 def outputGenres():
     command = getGenresTrends(request.form)
@@ -121,7 +127,7 @@ def outputGenres():
     if(succ):
         return render_template("outputtrgenres.html", name=(ret_val))
     else:
-        return render_template("deletefailure.html")
+        return render_template("deletefailure.html", message = makeMessage(ret_val))
     
 
 @app.route("/outputtrsong", methods=["POST"])
@@ -132,7 +138,7 @@ def outputSong():
     if(succ):
         return render_template("outputtrsong.html", name=(ret_val))
     else:
-        return render_template("deletefailure.html")
+        return render_template("deletefailure.html", message = makeMessage(ret_val))
     
 
 @app.route("/outputtralbum", methods=["POST"])
@@ -143,4 +149,4 @@ def outputAlbum():
     if(succ):
         return render_template("outputtralbum.html", name=(ret_val))
     else:
-        return render_template("deletefailure.html")
+        return render_template("deletefailure.html", message = makeMessage(ret_val))
