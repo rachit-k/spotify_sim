@@ -8,14 +8,16 @@
         <thead>
             <tr>
                 <th>Serial No</th>
+                <th>Artist</th>
                 <th>Song</th>
-                <th>Link</th>
+                <th>Song Link</th>
             </tr>
         </thead>
         <tbody>
             {% for song in name %}
                 <tr>
                     <td>{{ loop.index }}</td>
+                    <td><img src="{{ song[2][0] }}" alt="" border=3 height=100 width=100></img></td>
                     <td>{{ song[0] }}</td>
                     <td>            
                         <a href="{{ song[1] }}" class="icon-link">
