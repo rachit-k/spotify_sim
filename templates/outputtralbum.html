@@ -9,6 +9,7 @@
             <tr>
                 <th>Serial No</th>
                 <th>Album</th>
+                <th>Album Link</th>
                 <th>Rank</th>
                 <th>Year</th>
             </tr>
@@ -18,6 +19,14 @@
                 <tr>
                     <td>{{ loop.index }}</td>
                     <td>{{ song[1] }}</td>
+                    <td>            
+                        <a href="{{ song[2] }}" class="icon-link">
+                        Play
+                        <svg class="bi" width="1em" height="1em">
+                            <use xlink:href="#chevron-right" />
+                        </svg>
+                        </a>
+                    </td>
                     <td>{{ song[3] }}</td>
                     <td>{{ (song[4])|int  }}</td>
                 </tr>
