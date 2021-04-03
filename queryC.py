@@ -47,7 +47,7 @@ def queryCreatorAlbum(form, album):
     return head+ queryCreatorHelper(form, where_head) + " limit "+str(lim)
 
 def queryCreatorArtist(form, artist):
-    head = 'select song_name, song_link from songart'
+    head = 'select song_name, song_link, image_link from songart'
     where_head = " where artist_name = '"+sql_proof(artist)+"'"
     lim = 100
     if(form.get("Num") is not None or form.get("Num")):
@@ -55,10 +55,12 @@ def queryCreatorArtist(form, artist):
     return head+ queryCreatorHelper(form, where_head) + " limit "+str(lim)
 
 def queryCreatorArtistAlbum(form, artist, album):
-    head = 'select song_name, song_link from songart, songalbum'
+    head = 'select song_name, song_link, image_link from songart, songalbum'
     where_head = "where songart.song_id=songalbum.song_id "
-    where_head = where_head + " and artist_name = '"+sql_proof(artist)+"'"
-    where_head = where_head + " and album_name = '"+sql_proof(album)+"'"
+    if(artist is not None and artist):
+        where_head = where_head + " and artist_name = '"+sql_proof(artist)+"'"
+    if(album is not None and album):
+        where_head = where_head + " and album_name = '"+sql_proof(album)+"'"
     lim = 100
     if(form.get("Num") is not None or form.get("Num")):
         lim = int(form.get("Num"))
@@ -67,11 +69,11 @@ def queryCreatorArtistAlbum(form, artist, album):
 def queryCreatorSong(form):
     artist = form.get("Artist")
     album = form.get("Album")
-    if((artist is None or not artist) and (album is None or not album)):
-        return queryCreatorEmpty(form)
-    elif (artist is None or not artist):
-        return queryCreatorAlbum(form, album)
-    elif (album is None or not album):
+    # if((artist is None or not artist) and (album is None or not album)):
+    #     return queryCreatorEmpty(form)
+    # elif (artist is None or not artist):
+    #     return queryCreatorAlbum(form, album)
+    if (album is None or not album) and (artist is not None and artist):
         return queryCreatorArtist(form, artist)
     else:
         return queryCreatorArtistAlbum(form, artist, album)
