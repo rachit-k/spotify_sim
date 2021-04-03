@@ -1,5 +1,19 @@
 from codeval import code2val, pcode2val, lcode2val, tcode2val
 from extract import getAttributes
+viewListall = ['songalbum', 'songart', 'my_genre_view', 'song_year', 'pop_year_song', 'pop_year_album']
+album_viewlist = ['pop_year_album']
+def refresh_allviews():
+    queryhead = 'refresh materialized view '
+    ret = ""
+    for v in viewListall:
+        ret = ret + queryhead + v +";\n"
+    return ret
+def refresh_album():
+    queryhead = 'refresh materialized view '
+    ret = ""
+    for v in album_viewlist:
+        ret = ret + queryhead + v +";\n"
+    return ret
 def sql_proof(s):
     return s.replace("'", "''")
 def queryCreatorHelper(form, where_head, tb_name):
@@ -80,10 +94,10 @@ def queryCreatorSong(form):
 
 
 def DelQueryCreatorName(song):
-    return "delete from song where song_name = '"+sql_proof(song) +"';"
+    return "begin;\ndelete from song where song_name = '"+sql_proof(song) +"';" + "\n"+refresh_allviews() +" Commit;"
 
 def DelQueryCreatorLink(link):
-    return "delete from song where link = '"+sql_proof(link) +"';"
+    return "begin;\ndelete from song where link = '"+sql_proof(link) +"';" +"\n" + refresh_allviews() +" Commit;"
 
 def DelQueryCreator(form):
     link = form.get("Song Link")
@@ -122,7 +136,7 @@ def InsQueryCreatorLink(form):
     art_genre_query = ""
     for atlist in genre_db:
         art_genre_query = art_genre_query + "Insert into artist_genre values (" + valueCreator(atlist)+addendum+"\n"
-    return "BEGIN;" + "\n" + artist_query + album_query+ "\n" + song_query + "\n" + song_art_query + album_art_query + art_genre_query +"COMMIT;"
+    return "BEGIN;" + "\n" + artist_query + album_query+ "\n" + song_query + "\n" + song_art_query + album_art_query + art_genre_query +refresh_allviews()+"COMMIT;"
 
 def getGenresQueryCreatorHelp(minfol, maxfol, pop):
     head = "select genre, count(genre) from simple_genre_view "
@@ -177,7 +191,7 @@ def insertQueryAlbumAdd(form):
     attlist=[createId(form.get('link'))]
     attlist.extend(form.values())
     query = query + valueCreator(attlist) +";"
-    return query
+    return "begin'\n"+query+refresh_album()+"Commit;\n"
 
 def insertQueryArtistAdd(form):
     query = "Insert into artist" + "(artist_id,"+columnCreator(form.keys())+")" + " values("
@@ -192,5 +206,5 @@ def insertQuerySongAdd(form):
     attlist=[createId(form.get('link'))]
     attlist.extend(form.values())
     query = query + valueCreator(attlist) +";"
-    return query
+    return "begin'\n"+query+refresh_allviews()+"Commit;\n"
     
