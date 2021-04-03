@@ -7,16 +7,16 @@ import copy
 
 app = Flask(__name__)
 
-app.config['dbname'] = "sample" #sys.argv[1]
-app.config['user'] = "postgres" #sys.argv[2]
-dbname = app.config.get('dbname')
-user = app.config.get('user')
-app.config['password'] = "qmwnebrv1234" #sys.argv[3]
-password = app.config.get('password')
-connect = ("dbname="+dbname+ " user="+user+ " password="+password)
-# connect = ("dbname="+dbname+ " user="+user)
-print(connect)
-conn = psycopg2.connect(connect)
+# app.config['dbname'] = "group_33" #sys.argv[1]
+# app.config['user'] = "postgres" #sys.argv[2]
+# dbname = app.config.get('dbname')
+# user = app.config.get('user')
+# app.config['password'] = "qmwnebrv1234" #sys.argv[3]
+# password = app.config.get('password')
+# connect = ("dbname="+dbname+ " user="+user+ " password="+password)
+# # connect = ("dbname="+dbname+ " user="+user)
+# print(connect)
+conn = psycopg2.connect(host="10.17.5.99", database = "group_33", port = 5432, password='kAA6f8HrVNey2', user = 'group_33')
 cur = conn.cursor()
 def makeMessage(err_list):
     return str(err_list[2].split("DETAIL")[-1])
