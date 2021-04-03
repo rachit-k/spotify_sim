@@ -19,7 +19,7 @@ print(connect)
 conn = psycopg2.connect(connect)
 cur = conn.cursor()
 def makeMessage(err_list):
-    return str(err_list[1])+" has occured via previous operation so aborting"
+    return str(err_list[2].split("DETAIL")[-1])
 def executionQuery(cur, command):
     try:
         cur.execute(command)
@@ -115,6 +115,7 @@ def output():
     command = queryCreatorSong(request.form)
     print(command)
     ret_val, succ = executionQuery(cur, command)
+    print(ret_val)
     if(succ):
         return render_template("outpage.html", name=(ret_val))
     else:

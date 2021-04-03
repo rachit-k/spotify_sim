@@ -2,7 +2,7 @@ from codeval import code2val, pcode2val, lcode2val, tcode2val
 from extract import getAttributes
 def sql_proof(s):
     return s.replace("'", "''")
-def queryCreatorHelper(form, where_head):
+def queryCreatorHelper(form, where_head, tb_name):
     song = form.get("Song")
     if(not ( song is None or  not song)):
         where_head = where_head + " and song_name='"+sql_proof(song)+"' "
@@ -24,59 +24,60 @@ def queryCreatorHelper(form, where_head):
     attval = form.get(t)
     if(not ( attval is None or  not attval)):
         where_head = where_head + " and " + t + ">=" +str(tcode2val(attval)[0])+ " and " +t + "<" +str(tcode2val(attval)[1])
-    return where_head
+    orderby = ""
+    if(form.get("Num") is not None and form.get("Num")):
+        lim = int(form.get("Num"))
+    group_clause = ' group by song_name, song_link '
+    if(form.get("Order") is not None and form.get("Order")):
+        orderby = " order by "+tb_name+"."+form.get("Order")
+        print("Form ka get is "+form.get("Order"))
+        group_clause = group_clause + ","+tb_name+"."+ form.get("Order").rstrip().lstrip().split(" ")[0]+" "
+    
+
+    return where_head+ group_clause + orderby + " limit "+str(lim) 
 def createId(link_name):
     dotprod = link_name.split(".")
     if 'spotify' in dotprod:
         return link_name.split("/")[-1].split("?")[0]
     return dotprod[1]+link_name.split("/")[-1].split("?")[0]
-def queryCreatorEmpty(form):
-    head = 'select song_name, link from song'
-    where_head = " where true"
-    lim = 100
-    if(form.get("Num") is not None or form.get("Num")):
-        lim = int(form.get("Num"))
-    return head+ queryCreatorHelper(form, where_head) + " limit "+str(lim)
+# def queryCreatorEmpty(form):
+#     head = 'select song_name, link from song'
+#     where_head = " where true"
+#     return head+ queryCreatorHelper(form, where_head)
 
 def queryCreatorAlbum(form, album):
-    head = 'select song_name, song_link from songalbum'
-    where_head = " where album_name = '"+sql_proof(album)+"'"
-    lim = 100
-    if(form.get("Num") is not None or form.get("Num")):
-        lim = int(form.get("Num"))
-    return head+ queryCreatorHelper(form, where_head) + " limit "+str(lim)
+    head = 'select song_name, song_link, array_agg(image_link) from songalbum, artist, artist_song'
+    where_head = " where album_name = '"+sql_proof(album)+"'" +" and artist.artist_id = artist_song.artist_id and artist_song.song_id=songalbum.song_id "
+    return head+ queryCreatorHelper(form, where_head, "songalbum")
 
 def queryCreatorArtist(form, artist):
-    head = 'select song_name, song_link, image_link from songart'
-    where_head = " where artist_name = '"+sql_proof(artist)+"'"
-    lim = 100
-    if(form.get("Num") is not None or form.get("Num")):
-        lim = int(form.get("Num"))
-    return head+ queryCreatorHelper(form, where_head) + " limit "+str(lim)
+    head = 'select song_name, song_link, array_agg(image_link) from songart'
+    where_head = " where true "
+    if(artist is not None and artist):
+        where_head = " where artist_name = '"+sql_proof(artist)+"'"
+    return head+ queryCreatorHelper(form, where_head, "songart")
 
 def queryCreatorArtistAlbum(form, artist, album):
-    head = 'select song_name, song_link, image_link from songart, songalbum'
-    where_head = "where songart.song_id=songalbum.song_id "
+    print("Debug inside Artist Album")
+    head = 'select song_name, song_link, array_agg(image_link) from songart, album, album_artist'
+    where_head = " where songart.album_id=album.album_id and album.album_id=album_artist.album_id and album_artist.artist_id=songart.artist_id "
     if(artist is not None and artist):
         where_head = where_head + " and artist_name = '"+sql_proof(artist)+"'"
     if(album is not None and album):
         where_head = where_head + " and album_name = '"+sql_proof(album)+"'"
-    lim = 100
-    if(form.get("Num") is not None or form.get("Num")):
-        lim = int(form.get("Num"))
-    return head+ queryCreatorHelper(form, where_head) + " limit "+str(lim)
-
+    return head+ queryCreatorHelper(form, where_head, "songart")
 def queryCreatorSong(form):
+    print(form)
     artist = form.get("Artist")
     album = form.get("Album")
-    # if((artist is None or not artist) and (album is None or not album)):
-    #     return queryCreatorEmpty(form)
-    # elif (artist is None or not artist):
-    #     return queryCreatorAlbum(form, album)
-    if (album is None or not album) and (artist is not None and artist):
+    print("album is "+album)
+    if (artist is None or not artist) and (album is not None and artist) :
+        return queryCreatorAlbum(form, album)
+    elif (album is None or not album):
         return queryCreatorArtist(form, artist)
     else:
         return queryCreatorArtistAlbum(form, artist, album)
+
 
 def DelQueryCreatorName(song):
     return "delete from song where song_name = '"+sql_proof(song) +"';"
