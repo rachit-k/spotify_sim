@@ -25,7 +25,10 @@ def executionQuery(cur, command):
         cur.execute(command)
     except Exception as e:
         return [e, type(e), e.pgerror], False
-    return cur.fetchall(), True
+    try:
+        return cur.fetchall(), True
+    except ProgrammingError:
+        return [], True
 @app.route("/", methods=["GET"])
 def welcome():
     return render_template("welcome.html")
@@ -98,6 +101,7 @@ def addfailure():
 
 @app.route("/deletesuccess", methods=["POST"])
 def deletesuccess():
+    print("form is "+str(request.form))
     command = DelQueryCreator(request.form)
     print(command)
     ret_val, succ = executionQuery(cur, command)

@@ -87,7 +87,7 @@ def DelQueryCreatorLink(link):
 
 def DelQueryCreator(form):
     link = form.get("Song Link")
-    song = form.get("Name")
+    song = form.get("Song")
     if(link is None or not link):
         return DelQueryCreatorName(song)
     return DelQueryCreatorLink(link)
