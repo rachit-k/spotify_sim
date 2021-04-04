@@ -1,0 +1,1 @@
+env FLASK_APP=FRONT_END/application.py flask run --port 5033
