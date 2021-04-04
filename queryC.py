@@ -2,6 +2,7 @@ from codeval import code2val, pcode2val, lcode2val, tcode2val
 from extract import getAttributes
 viewListall = ['songalbum', 'songart', 'my_genre_view', 'song_year', 'pop_year_song', 'pop_year_album']
 album_viewlist = ['pop_year_album']
+artist_viewlist = ['my_genre_view']
 def refresh_allviews():
     queryhead = 'refresh materialized view '
     ret = ""
@@ -12,6 +13,12 @@ def refresh_album():
     queryhead = 'refresh materialized view '
     ret = ""
     for v in album_viewlist:
+        ret = ret + queryhead + v +";\n"
+    return ret
+def refresh_artist():
+    queryhead = 'refresh materialized view '
+    ret = ""
+    for v in artist_viewlist:
         ret = ret + queryhead + v +";\n"
     return ret
 def sql_proof(s):
@@ -199,7 +206,7 @@ def insertQueryArtistAdd(form):
     attlist.extend(form.values())
     print(attlist)
     query = query + valueCreator(attlist) +";"
-    return query
+    return "begin;"+query+refresh_artist()+"Commit;\n"
 
 def insertQuerySongAdd(form):
     query = "Insert into song" + "(song_id,"+columnCreator(form.keys())+")" + " values("
