@@ -191,7 +191,7 @@ def insertQueryAlbumAdd(form):
     attlist=[createId(form.get('link'))]
     attlist.extend(form.values())
     query = query + valueCreator(attlist) +";"
-    return "begin'\n"+query+refresh_album()+"Commit;\n"
+    return "begin;\n"+query+refresh_album()+"Commit;\n"
 
 def insertQueryArtistAdd(form):
     query = "Insert into artist" + "(artist_id,"+columnCreator(form.keys())+")" + " values("
@@ -206,5 +206,5 @@ def insertQuerySongAdd(form):
     attlist=[createId(form.get('link'))]
     attlist.extend(form.values())
     query = query + valueCreator(attlist) +";"
-    return "begin'\n"+query+refresh_allviews()+"Commit;\n"
+    return "begin;\n"+query+refresh_allviews()+"Commit;\n"
     
