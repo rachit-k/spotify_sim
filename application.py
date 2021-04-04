@@ -7,16 +7,18 @@ import copy
 
 app = Flask(__name__)
 
-# app.config['dbname'] = "group_33" #sys.argv[1]
+# app.config['dbname'] = "db" #sys.argv[1]
 # app.config['user'] = "postgres" #sys.argv[2]
 # dbname = app.config.get('dbname')
 # user = app.config.get('user')
 # app.config['password'] = "qmwnebrv1234" #sys.argv[3]
 # password = app.config.get('password')
 # connect = ("dbname="+dbname+ " user="+user+ " password="+password)
-# # connect = ("dbname="+dbname+ " user="+user)
+# connect = ("dbname="+dbname+ " user="+user)
 # print(connect)
 conn = psycopg2.connect(host="10.17.5.99", database = "group_33", port = 5432, password='kAA6f8HrVNey2', user = 'group_33')
+# conn = psycopg2.connect(connect)
+conn.autocommit=True
 cur = conn.cursor()
 def makeMessage(err_list):
     return str(err_list[2].split("DETAIL")[-1])
@@ -84,20 +86,20 @@ def addsuccess():
         elif (request.form.get('submit')=='SongL'):
             command = InsQueryCreatorLink(f)
         else:
-            return render_template("addfailure.html")
+            return render_template("failure.html")
     except Exception:
-        return render_template("addfailure.html",  message = "Failure while creation of query")
+        return render_template("failure.html",  message = "Failure while creation of query")
     print("Command is "+command)
     ret_val, succ = executionQuery(cur, command)
     print("ret val is "+str(ret_val))
     if(succ):
         return render_template("addsuccess.html")
     else:
-        return render_template("addfailure.html",  message = makeMessage(ret_val))
+        return render_template("failure.html",  message = makeMessage(ret_val))
 
-@app.route("/addfailure", methods=["POST"])
-def addfailure():
-    return render_template("addfailure.html")
+@app.route("/failure", methods=["POST"])
+def failure():
+    return render_template("failure.html")
 
 @app.route("/deletesuccess", methods=["POST"])
 def deletesuccess():
@@ -108,11 +110,7 @@ def deletesuccess():
     if(succ):
         return render_template("deletesuccess.html")
     else:
-        return render_template("deletefailure.html", message = makeMessage(ret_val))
-
-@app.route("/deletefailure", methods=["POST"])
-def deletefailure():
-    return render_template("deletefailure.html")
+        return render_template("failure.html", message = makeMessage(ret_val))
 
 @app.route("/output", methods=["POST"])
 def output():
@@ -123,7 +121,8 @@ def output():
     if(succ):
         return render_template("outpage.html", name=(ret_val))
     else:
-        return render_template("deletefailure.html", message = makeMessage(ret_val))
+        return render_template("failure.html", message = makeMessage(ret_val))
+        
 @app.route("/outputtrgenres", methods=["POST"])
 def outputGenres():
     command = getGenresTrends(request.form)
@@ -132,7 +131,7 @@ def outputGenres():
     if(succ):
         return render_template("outputtrgenres.html", name=(ret_val))
     else:
-        return render_template("deletefailure.html", message = makeMessage(ret_val))
+        return render_template("failure.html", message = makeMessage(ret_val))
     
 
 @app.route("/outputtrsong", methods=["POST"])
@@ -143,7 +142,7 @@ def outputSong():
     if(succ):
         return render_template("outputtrsong.html", name=(ret_val))
     else:
-        return render_template("deletefailure.html", message = makeMessage(ret_val))
+        return render_template("failure.html", message = makeMessage(ret_val))
     
 
 @app.route("/outputtralbum", methods=["POST"])
@@ -154,4 +153,4 @@ def outputAlbum():
     if(succ):
         return render_template("outputtralbum.html", name=(ret_val))
     else:
-        return render_template("deletefailure.html", message = makeMessage(ret_val))
+        return render_template("failure.html", message = makeMessage(ret_val))
