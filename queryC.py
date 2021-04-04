@@ -169,8 +169,11 @@ def getYearSongTrends(form):
         num = int(num)
     query = 'select song_id, song_name, song_link, rank, year from pop_year_song '
     where_head = "where rank<="+str(num)
-    where_head = where_head + " and year <="+str(end) + " and year>="+str(start)
-    return query+where_head
+    if(start==end):
+        where_head = where_head + " and year ="+str(end)
+    else:
+        where_head = where_head + " and year <="+str(end) + " and year>="+str(start)
+    return query+where_head +" order by year"
 
 def getYearAlbumTrends(form):
     start = form.get('From')
@@ -182,8 +185,11 @@ def getYearAlbumTrends(form):
         num = int(num)
     query = 'select album_id, album_name, album_link, rank, year from pop_year_album '
     where_head = "where rank<="+str(num)
-    where_head = where_head + " and year <="+str(end) + " and year>="+str(start)
-    return query+where_head
+    if(start==end):
+        where_head = where_head + " and year ="+str(end)
+    else:
+        where_head = where_head + " and year <="+str(end) + " and year>="+str(start)
+    return query+where_head +" order by year"
 
 
 
